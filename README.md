@@ -1,47 +1,33 @@
 # Brine-task
+ task to deploy a Python application with Docker, AWS ECR, ECS, and CodePipeline.
+
 Prepare your environment
-STEP 1 - 
+STEP 1 - Install AWS CLI and Docker
 Install AWS CLI and Docker on your local machine. Make sure to configure AWS CLI with your AWS credentials.
 
-Create a repository in Amazon ECR (Elastic Container Registry)
+Create a repository in Amazon ECR (Elastic Container Registry):
 
-This is where you will push your Docker image. Run the following command in your terminal:
 aws ecr create-repository --repository-name my-repo
+
 
 STEP 2 - 
 Build your Docker image and push it to ECR
 
 First, create a Dockerfile in the root of your project:
-FROM python:3.8-slim-buster
-
-WORKDIR /app
-
-COPY . .
-
-RUN pip install -r requirements.txt
-
-CMD ["python", "main.py"]
 
 This Dockerfile starts with a Python 3.10 image, sets the working directory to /app, copies the current directory into the container, installs any requirements, and then runs main.py.
 
 Then, build your Docker image:
 docker build -t my-python-app .
+
 docker run -it --rm --name my-running-app my-python-app
+
 You can also run your test cases in a similar way, but with the command to run your tests in the Dockerfile, like so:
 
-FROM python:3.10
+Now build the docker image for test cases -
+docker build -t testcases .
 
-WORKDIR /app
-
-COPY . .
-
-RUN pip install -r requirements.txt
-
-CMD ["python", "-m", "unittest", "main.py"]
-
-Now build the docker image -
-docker build -t my-python-tests .
-docker run -it --rm --name my-running-tests my-python-tests
+docker run -it --rm --name my-running-tests testcases
 
 Alternatively, you could use docker-compose to simplify the running of your application and tests. For this, you'd need to create a docker-compose.yml file:
 
@@ -60,7 +46,7 @@ docker-compose up app
 docker-compose up test
 
 ==============================================================
-You can even build the image and push it to ECR:
+now to build  build the image and push it to ECR:
 
 $(aws ecr get-login --no-include-email --region region-name)  # log in to ECR
 
