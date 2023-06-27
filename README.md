@@ -1,5 +1,7 @@
 1- Create the main.py and test_case.py file
+
 2- Create a docker file with requirements in it .
+
 3- Now do the docker build 
 docker build -t my-app .
 
