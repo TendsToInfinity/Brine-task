@@ -1,4 +1,4 @@
-1- Create the main.py and test_case.py file
+1- Create the main.py and test_task.py file
 
 2- Create a docker file with requirements in it .
 
